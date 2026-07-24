@@ -70,6 +70,17 @@ Stack `kube-prometheus-stack` (Prometheus + Grafana + AlertManager) desplegado c
 
 ---
 
+## Código propio en este repositorio
+
+| Archivo | Qué hace |
+|---|---|
+| [`ci-sonarcloud.yaml`](ci-sonarcloud.yaml) | Workflow de CI: lint (pre-commit) → tests con cobertura → SonarCloud SAST, encadenados con `needs` |
+| [`lint-snyk.yaml`](lint-snyk.yaml) | Job "Security Snyk Checks": escanea dependencias y sube el SARIF a GitHub Code Scanning |
+| [`release-cosign-sbom.yaml`](release-cosign-sbom.yaml) | Workflow de release: semantic-release → build multi-arch → firma con cosign → verificación → generación y publicación de SBOM |
+| [`Dockerfile`](Dockerfile) | Imagen mínima (`python:3.8-alpine`) con healthcheck propio |
+
+---
+
 ## Stack
 
 `GitHub Actions` · `SonarCloud` · `Snyk` · `Renovate` · `cosign / Sigstore` · `ArgoCD + Image Updater` · `Helm` · `Sealed Secrets` · `Prometheus / Grafana / AlertManager` · `KEDA` · `Docker`
