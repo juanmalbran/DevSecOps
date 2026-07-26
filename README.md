@@ -33,6 +33,8 @@ Cuatro labs encadenados que construyen un pipeline DevSecOps real de punta a pun
 
 ![Pipeline DevSecOps](devsecops-pipeline.png)
 
+*Marco S-SDLC de referencia: dónde encaja cada control de seguridad en el ciclo de desarrollo. Los labs de este repositorio implementan la columna práctica —SonarCloud (SAST), Snyk (SCA), cosign/SBOM, ArgoCD (GitOps) y Prometheus/KEDA—; el threat modeling (fase PLAN) y el DAST (fase TEST) se incluyen como parte del framework completo, no se implementaron en estos labs.*
+
 ---
 
 ## Lab 1 — SAST + gestión de dependencias + firma
