@@ -108,6 +108,7 @@ Stack `kube-prometheus-stack` (Prometheus + Grafana + AlertManager) desplegado c
 - **Secretos en el repositorio** — claves y tokens van en gestores de secretos (Sealed Secrets); un secreto en el historial de git es un secreto comprometido.
 - **Deploy key de solo lectura en ArgoCD Image Updater** — sin permiso de escritura (`-w`), Image Updater no puede commitear el nuevo tag al repo GitOps.
 - **Confundir `mikefarah/yq` con `kislyuk/yq`** — sintaxis incompatible entre las dos versiones; si `yq e` imprime la ayuda de `jq`, es la versión equivocada.
+- **Base de imagen en fin de soporte** — el lab usa `python:3.8-alpine`, pero 3.8 llegó a *end-of-life* en octubre 2024: una base sin soporte deja de recibir parches de seguridad. En un pipeline real, la imagen base debe mantenerse en una versión soportada (ej. `python:3.12-alpine`) y actualizarse automáticamente (Renovate ya cubre esto para las dependencias).
 
 ---
 
