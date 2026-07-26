@@ -2,9 +2,9 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/CI%2FCD-2088FF?style=flat-square&logo=githubactions&logoColor=white" />
-  <img src="https://img.shields.io/badge/SAST%2FDAST-3FB950?style=flat-square" />
+  <img src="https://img.shields.io/badge/SAST%2FSCA-3FB950?style=flat-square" />
   <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" />
-  <img src="https://img.shields.io/badge/Trivy-1904DA?style=flat-square&logo=aqua&logoColor=white" />
+  <img src="https://img.shields.io/badge/ArgoCD-EF7B4D?style=flat-square&logo=argo&logoColor=white" />
 </p>
 
 ---
@@ -41,7 +41,9 @@ Cuatro labs encadenados que construyen un pipeline DevSecOps real de punta a pun
 - **Renovate** abre PRs automáticas cuando hay dependencias desactualizadas (ej. bump de `pylint` con changelog incluido).
 - **cosign** (Sigstore) firma las imágenes Docker — claves generadas y subidas automáticamente como GitHub Secrets (`COSIGN_PASSWORD`, `COSIGN_PRIVATE_KEY`, `COSIGN_PUBLIC_KEY`).
 
-## Lab 2 — SCA con Snyk (SAST + dependencias con CVEs)
+## Lab 2 — SCA con Snyk
+
+El **SCA** (*Software Composition Analysis*) escanea las dependencias de terceros del proyecto en busca de vulnerabilidades conocidas (CVEs) — la mayoría del código de una app moderna son librerías ajenas. Snyk se integra como job de CI:
 
 ```yaml
 - name: Security Snyk Checks
@@ -56,7 +58,7 @@ Flujo verificado end-to-end: push con dependencia vulnerable → el job **falla*
 
 ## Lab 3 — GitOps con ArgoCD
 
-Dos repos separados (best practice): uno de código (app + Dockerfile + workflows) y uno GitOps (Helm chart `values.yaml`). El **ArgoCD Image Updater** monitorea el registry cada 2 minutos y commitea el nuevo tag al repo GitOps automáticamente; ArgoCD sincroniza el cluster con ese estado. Secretos gestionados con **Sealed Secrets** (cifrados con `kubeseal`, seguros de commitear en Git).
+**GitOps** significa gestionar el despliegue declarándolo en Git: el repositorio es la única fuente de verdad del estado deseado del cluster, y una herramienta (ArgoCD) se encarga de que el cluster real coincida siempre con lo que dice el repo. Dos repos separados (best practice): uno de código (app + Dockerfile + workflows) y uno GitOps (Helm chart `values.yaml`). El **ArgoCD Image Updater** monitorea el registry cada 2 minutos y commitea el nuevo tag al repo GitOps automáticamente; ArgoCD sincroniza el cluster con ese estado. Secretos gestionados con **Sealed Secrets** (cifrados con `kubeseal`, seguros de commitear en Git).
 
 ```
 [INFO] Setting new image to user/app:1.0.2
