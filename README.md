@@ -80,7 +80,7 @@ Stack `kube-prometheus-stack` (Prometheus + Grafana + AlertManager) desplegado c
 |---|---|
 | [`ci-sonarcloud.yaml`](ci-sonarcloud.yaml) | Workflow de CI: lint (pre-commit) → tests con cobertura → SonarCloud SAST, encadenados con `needs` |
 | [`lint-snyk.yaml`](lint-snyk.yaml) | Job "Security Snyk Checks": escanea dependencias y sube el SARIF a GitHub Code Scanning |
-| [`release-cosign-sbom.yaml`](release-cosign-sbom.yaml) | Workflow de release: semantic-release → build multi-arch → firma con cosign → verificación → generación y publicación de SBOM |
+| [`release-cosign-sbom.yaml`](release-cosign-sbom.yaml) | Workflow de release: semantic-release → build multi-arch → firma con cosign → verificación → generación y publicación de **SBOM** (*Software Bill of Materials*: el inventario completo de componentes y dependencias que contiene la imagen, para poder auditarla) |
 | [`Dockerfile`](Dockerfile) | Imagen mínima (`python:3.8-alpine`) con healthcheck propio |
 
 ---
