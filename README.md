@@ -14,46 +14,41 @@
 
 Integrar la seguridad en cada fase del ciclo de vida del desarrollo, no como una auditoría al final. La filosofía **shift-left**: cuanto antes se detecta una vulnerabilidad, más barata es de corregir. Seguridad como **responsabilidad compartida y automatizada** dentro del pipeline.
 
-La masterclass recorre un pipeline **DevSecOps de extremo a extremo** sobre una aplicación Python: desde los controles de seguridad automáticos en el CI hasta el despliegue continuo en Kubernetes con GitOps, la firma de artefactos y la observabilidad en producción.
+La masterclass recorre un pipeline **DevSecOps de extremo a extremo** sobre una aplicación Python: de los controles de seguridad automáticos en el CI al despliegue continuo en Kubernetes con GitOps, la firma de artefactos y la observabilidad en producción.
 
 ---
 
-## Pipeline DevSecOps
-
-Cada fase incorpora su propio control de seguridad automatizado. Un hallazgo crítico rompe el build antes de llegar a producción: la seguridad deja de ser un cuello de botella manual.
+## Pipeline S-SDLC — un control de seguridad en cada fase
 
 ![Pipeline DevSecOps](devsecops-pipeline.png)
 
----
-
-## Stack y qué resuelve cada pieza
-
-| Fase | Herramienta | Qué aporta |
+| Fase | Qué se hace | Herramientas |
 |---|---|---|
-| **CI / Pipelines** | **GitHub Actions** | Orquesta el pipeline: cada push dispara build, tests y los controles de seguridad como *gates* automáticos |
-| **SAST** | **SonarCloud** | Análisis estático del código en cada PR: bugs, code smells y vulnerabilidades antes del merge |
-| **SCA** | **Snyk** | Escaneo de dependencias de terceros en busca de CVEs conocidos |
-| **Dependencias** | **Renovate** | Pull requests automáticos para mantener las dependencias actualizadas (reduce la superficie de ataque) |
-| **Firma de artefactos** | **cosign / Sigstore** | Firma criptográfica de las imágenes de contenedor para garantizar su integridad y procedencia |
-| **GitOps / CD** | **Argo CD** | Despliegue continuo declarativo: el estado deseado vive en Git y Argo CD lo reconcilia en el clúster |
-| **Orquestación** | **Kubernetes · Helm** | Despliegue y empaquetado de la aplicación en el clúster |
-| **Observabilidad** | **Prometheus · KEDA** | Métricas en producción y **autoescalado** dirigido por eventos según la carga |
+| **Plan** | Modelado de amenazas y requisitos de seguridad desde el diseño | **STRIDE**, Threat Modeling |
+| **Code** | Análisis estático del código y controles previos al commit | **SonarCloud (SAST)**, Conventional Commits, pre-commit hooks |
+| **Build** | Construcción de la imagen, firma y bill of materials | **Docker**, **cosign / Sigstore** (firma), **SBOM** |
+| **Test** | Escaneo de dependencias, dinámico y de secretos | **Snyk (SCA)**, DAST, secret scanning |
+| **Release** | Versionado y actualización automática de dependencias | semantic-release, **Renovate** |
+| **Deploy** | Despliegue declarativo por GitOps sobre Kubernetes | **Argo CD**, Sealed Secrets, Image Updater, **Helm** |
+| **Monitor** | Observabilidad y autoescalado en producción | **Prometheus**, **KEDA**, Grafana, AlertManager |
+
+Un hallazgo crítico en cualquier gate **rompe el build** antes de llegar a producción: la seguridad deja de ser un cuello de botella manual.
 
 ---
 
 ## Conceptos clave
 
-- **Shift-left** — mover los controles (SAST, SCA, gestión de dependencias) lo más temprano posible, idealmente en el PR, no al final.
-- **Pipeline como código** — los *gates* de seguridad viven en el repositorio y rompen el build ante hallazgos críticos, de forma reproducible y auditable.
-- **GitOps** — Git como única fuente de verdad del estado de la infraestructura; Argo CD reconcilia el clúster con lo declarado.
-- **Cadena de suministro segura** — firmar las imágenes (cosign/Sigstore) para poder verificar qué se despliega y de dónde viene.
-- **Seguridad hasta producción** — la observabilidad (Prometheus) y el autoescalado (KEDA) extienden la mirada de seguridad y disponibilidad al runtime.
+- **Shift-left** — mover los controles (SAST, SCA, gestión de dependencias, secret scanning) lo más temprano posible, idealmente en el PR.
+- **Pipeline como código** — los *gates* de seguridad viven en el repositorio y se ejecutan solos, de forma reproducible y auditable.
+- **GitOps** — Git como única fuente de verdad del estado del clúster; **Argo CD** reconcilia lo declarado en producción.
+- **Cadena de suministro segura** — firmar imágenes con **cosign/Sigstore** y generar el **SBOM** permite verificar qué se despliega y de dónde viene.
+- **Seguridad hasta el runtime** — la observabilidad (Prometheus/Grafana) y el autoescalado por eventos (**KEDA**) extienden la mirada de seguridad y disponibilidad a producción.
 
 ---
 
 ## Stack
 
-`GitHub Actions` · `SonarCloud` · `Snyk` · `Renovate` · `cosign / Sigstore` · `Argo CD` · `Kubernetes` · `Helm` · `Prometheus` · `KEDA` · `Docker`
+`GitHub Actions` · `SonarCloud` · `Snyk` · `Renovate` · `cosign / Sigstore` · `SBOM` · `Argo CD` · `Kubernetes` · `Helm` · `Prometheus` · `KEDA` · `Grafana` · `Docker`
 
 ---
 
