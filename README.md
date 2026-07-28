@@ -12,6 +12,8 @@
 
 ## Sobre este módulo
 
+> *Módulo conceptual — resumen del pipeline DevSecOps visto en la masterclass.*
+
 Integrar la seguridad en cada fase del ciclo de vida del desarrollo, no como una auditoría al final. La filosofía **shift-left**: cuanto antes se detecta una vulnerabilidad, más barata es de corregir. Seguridad como **responsabilidad compartida y automatizada** dentro del pipeline.
 
 La masterclass recorre un pipeline **DevSecOps de extremo a extremo** sobre una aplicación Python: de los controles de seguridad automáticos en el CI al despliegue continuo en Kubernetes con GitOps, la firma de artefactos y la observabilidad en producción.
